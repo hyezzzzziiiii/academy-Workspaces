@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+F:\academy\hyeji\workspaces\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1464016930.index
+2006091426.index
+3573211004.index
+1476416236.index
+823910695.index
+1623644511.index
+1488130265.index
+3575732573.index

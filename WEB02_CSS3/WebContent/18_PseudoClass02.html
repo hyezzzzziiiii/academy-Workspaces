@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PseudoClass02</title>
+
+<style type = "text/css">
+	li> a:first-child{color:red;}
+	/* 최초부른 이름이 li라는건 모두를 부른 것과 같습니다
+	따라서 위의 CSS는 모든 li의 후손 a태그 중 첫번쨰 태그를 말합니다 */
+	li:first-child> a{color:blue;}
+	/* :first-child키워드가 li에 붙어있다는 뜻은 li중에 첫번째 요소 (child태그)를 말합니다.
+	따라서 맨 처음 li만 해당됩니다. */
+</style>
+
+</head>
+<body>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	<li><a href = "#"> PsuedoClass</a></li>
+	</body>
+</html>

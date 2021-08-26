@@ -1,0 +1,124 @@
+<!DOCTYPE html><!--확인 필요 주석 달려 있기 때문에 복붙 안됨-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style type="text/css">
+    #base{position:relative; width:100%; height:145px; border:1px dashed gray;}
+
+    #view1{position:relative; width:1025px; height:115px; border:1px solid red; margin:0 auto; overflow:hidden;}
+
+    #view2{position:relative; width:1025px; height:30px; border:1px solid blue; margin:0 auto;}
+
+    #banners{position:absolute; width:9225px; height:115px; border:1px solid green; top:0px; left:0px; }
+
+    body{overflow-x:hidden;}/*스크롤바 고정*/
+
+    #remote{position:relative; width:240px; height:20px; border:1px dotted black; float:right; margin-top:4px;}
+
+    .btns{position:relative; width:18px; height:18px; border:1px solid black; float:left; font-size:90%; font-weight:bold; line-height:18px; text-align:center;}
+
+    .btns:hover{ cursor:default; } /*커서 고정*/
+
+</style>
+<script src="script/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+
+    var banners = ['images/H1.png', 'images/H2.png', 'images/H3.png', 'images/H4.png', 'images/H5.png', 'images/H6.png', 'images/H7.png', 'images/H8.png', 'images/H9.png'];
+
+    var tags='';
+ /*배너에 들어갈 변수 이름 tags로 설정하고 빈 문자열 만듬*/
+    for(var i=0; i<=8; i++)
+        tags += '<img src=' + banners[i] + '">'
+    /*alert(tags); -> 중간에 확인 가능*/
+    
+    function toWhite(){}
+    function toBlack(x){}
+
+
+    var imgNum = 0; /* 현재보여지고 있는 이미지*/
+    var autoState = 'off';
+
+    $(function(){
+    $(tags).appendTo('#banners'); /* 바디의 배너스에 들어갈 함수*/
+    //$('#remote div')
+
+    $('.btns:eq(1)').css({'background':'black', 'color':'white'});
+    $('.btns').click( function(){
+        var num = $(this).index(); /*클릭될 인덱스*/ 
+        // alert(num);
+
+    for(var i=0; i<=11; i++){
+    var s = '.btns:eq(' + i + ')';
+    $(s).css( {'background':'white', 'color':'black'} );
+    }
+
+    if(num==0){  //왼쪽버튼
+    if(autoState=='on') return;
+    imgNum--;
+    if(imgNum<0) imgNum = 0;  
+    $('#banners').animate( {left:imgNum * 1025 * (-1)}, 500);
+    $('#remote div:eq(' + (imgNum+1) + ')').css({'background':'black', 'color':'white'});
+    }else if(num==10){ //오른 쪽 버튼
+    if(autoState=='on') return;
+    imgNum++;
+    if(imgNum>8)imgNum = 8;
+    $('#banners').animate( {left:imgNum * 1025 * (-1)}, 500);
+    $('#remote div:eq(' + (imgNum+1) + ')').css({'background':'black', 'color':'white'});
+    }else if(num==11){ //오토 버튼
+    $('.btns:eq(' + (imgNum+1) + ')').css({'background':'black', 'color':'white'}); // timer 가 작동하면 현재 영역의 주체인 $('.btns').click() 이벤트와 상관없이 동작하므로 현재 버튼을 검은 배경에 흰색 글자로 변경하는 구문없이 타이머가 시작됩니다. 따라서 일부러 한번 현재 버튼을 배경(검은색)과 글자색(흰색)을 설정하는 동작이 한번 더 필요합니다. 
+
+    if(autoState=='off'){
+        autoState='on';
+        $(this).html("■");
+        timer = window.setInterval(function(){
+        imgNum++; // 이미지 번호 +1
+        if(imgNum>8)imgNum = 0; // 오른쪽 끝을 지나면 다시 처음 이미지로
+        $('#banners').animate( {left:imgNum * 1025 * (-1)}, 500); 
+        for(var i=0; i<=11; i++){
+        var s = '.btns:eq(' + i + ')';
+        $(s).css( {'background':'white', 'color':'black'} );
+        } // 타이머가 실행하는 구문안에는 별도의 동작(모든 버튼 흰색배경 검은색 글자 설정)이 필요합니다
+        $('.btns:eq(' + (imgNum+1) + ')').css({'background':'black', 'color':'white'});
+        }, 1500);
+    }else{
+    autoState='off';
+    $(this).html("▶");
+    window.clearInterval(timer);
+    }
+    }else{
+    if(autoState=='on') return;
+    imgNum = num-1; // 0부터 시작이니까
+    $('#banners').animate( {left:imgNum * 1025 * (-1)}, 500);
+    $('#remote div:eq(' + num + ')').css({'background':'black', 'color':'white'});
+    }
+  });
+});
+</script>    
+</head>
+<body>
+<div id="base">
+    <div id = "view1">
+        <div id="banners"></div>
+    </div>
+
+    <div id = "view2">
+        <div id="remote">
+            <div class="btns" id="btnL">◁</div>
+            <div class="btns" id="btn0">1</div>
+            <div class="btns" id="btn1">2</div>
+            <div class="btns" id="btn2">3</div>
+            <div class="btns" id="btn3">4</div>
+            <div class="btns" id="btn4">5</div>
+            <div class="btns" id="btn5">6</div>
+            <div class="btns" id="btn6">7</div>
+            <div class="btns" id="btn7">8</div>
+            <div class="btns" id="btn8">9</div>
+            <div class="btns" id="btnR">▷</div>
+            <div class="btns" id="btnA">▶</div>
+        </div>
+    </div>
+</div> 
+   
+</body>
+</html>

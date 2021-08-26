@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>09_Relative_Animation.html</title>
+<style type="text/css">
+    div{width: 50px; height: 50px; background-color: orange; }   
+</style>
+<script src="script/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('div').click(function(){
+           //현재 클릭된 div를 this라고 표현가능
+            var w = $(this).css('width');
+            var h = $(this).css('height');
+            
+            $(this).animate({
+                width: parseInt(w) +50,
+                height: parseInt(h) +50
+            }, 1000);
+        });
+    });
+    
+    
+    
+</script>
+</head>
+<body>
+   
+<body>
+    <div></div>
+</body>
+    
+</body>
+</html>

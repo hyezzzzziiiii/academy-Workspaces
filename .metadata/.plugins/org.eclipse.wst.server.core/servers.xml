@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v9.0 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v9.0 Server at localhost" name="Tomcat v9.0 Server at localhost" runtime-id="Apache Tomcat v9.0" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="17">
+    <list key="modules" value0="WEB03_LAYOUT::org.eclipse.jst.jee.server:WEB03_LAYOUT::jst.web::3.0" value1="WEB08_MemberMGT_UseServlet::org.eclipse.jst.jee.server:WEB08_MemberMGT_UseServlet::jst.web::3.0" value2="WEB05_JAVASCRIPT::org.eclipse.jst.jee.server:WEB05_JAVASCRIPT::jst.web::3.0" value3="WEB06_JQuery::org.eclipse.jst.jee.server:WEB06_JQuery::jst.web::3.0" value4="WEB04_ANIMATION::org.eclipse.jst.jee.server:WEB04_ANIMATION::jst.web::3.0" value5="WEB02_CSS3::org.eclipse.jst.jee.server:WEB02_CSS3::jst.web::3.0" value6="WEB01_HTML5::org.eclipse.jst.jee.server:WEB01_HTML5::jst.web::4.0" value7="WEB09_MemberMGT_Model2::org.eclipse.jst.jee.server:WEB09_MemberMGT_Model2::jst.web::3.0" value8="WEB11_FileUpload::org.eclipse.jst.jee.server:WEB11_FileUpload::jst.web::3.0"/>
+  </server>
+</servers>

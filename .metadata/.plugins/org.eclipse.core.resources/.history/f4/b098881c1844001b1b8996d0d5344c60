@@ -1,0 +1,82 @@
+package JDBC05;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
+public class PersonDao {
+
+	static String driver = "oracle.jdbc.driver.OracleDriver";
+	static String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	static Connection con = null;
+	static PreparedStatement pstmt = null;
+	static ResultSet rs = null;
+	
+	public ArrayList<PersonDto> select() {
+		ArrayList<PersonDto> list = new ArrayList<PersonDto>();
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "select * from person";
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		
+		while( rs.next() ) { 
+		PersonDto bdto = new PersonDto();
+		bdto.setPersonnum(rs.getString("personnum"));
+		bdto.setPersonname(rs.getString("personname"));
+		bdto.setPhone(rs.getInt("phone"));
+		bdto.setBirth(rs.getInt("birth"));
+		bdto.setEnterdate(rs.getInt("enterdate"));
+		bdto.setBpoint(rs.getInt("bpoint"));
+		bdto.setAge(rs.getInt("age"));
+		bdto.setGender(rs.getString("gender"));
+		list.add(bdto);
+		}
+		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (SQLException e) { e.printStackTrace(); }
+
+		try { 
+			if(con != null) con.close(); 
+			if(pstmt != null) pstmt.close();
+			if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace();}
+		return list;  
+	}
+	
+	public int insert(PersonDto pdto) {
+		int result = 0;
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "insert into booklist values(person_seq.nextVal,?,?,?,?,?)";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, pdto.getPersonnum());
+		pstmt.setString(2, pdto.getPersonname());
+		pstmt.setInt(3, pdto.getPhone());
+		pstmt.setInt(4, pdto.getBirth());
+		pstmt.setInt(5, pdto.getEnterdate());
+		pstmt.setInt(6, pdto.getBpoint());
+		pstmt.setInt(7, pdto.getAge());
+		pstmt.setString(8, pdto.getGender());
+		
+		//personnum/ personname/ phone/ birth/enterdate bpoint age gender
+		result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {e.printStackTrace();
+		} catch (SQLException e) {e.printStackTrace();
+		} 
+		try { 
+		if(con != null) con.close(); 
+		if(pstmt != null) pstmt.close();
+		if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace(); }
+		
+		return result;
+		}
+
+
+}

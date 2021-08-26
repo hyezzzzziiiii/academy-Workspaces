@@ -1,0 +1,55 @@
+package JDBC04;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import JDBC03.BookDao;
+import JDBC03.BookDto;
+
+public class in_OutDriver {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);  // 사용자에게 메뉴를 보여줌
+		System.out.println("\n*** 메뉴 선택 ***");
+		System.out.printf("1. 프로그램 종료 2. 데이터 추가 3. 데이터 열람 4. 데이터 수정 5. 데이터 삭제\"");
+		System.out.print(">> 메뉴 선택 :");
+			String choice = sc.nextLine();
+		switch(choice) {
+		case "3" : selectData() ;break;
+		case "2" : insertData(); break;
+		case "4" : updateData();break;
+		case "5" : deleteData(); break;
+		}
+
+	}
+
+	private static void selectData() {
+		In_OutDao idao = new In_OutDao();
+		
+		ArrayList<In_OutDto> list = null;  
+		list = idao.select(); // 저장
+		System.out.println("대출일자\t순번\t도서번호\t회원번호\t할인금액");
+		System.out.println("------------------------------------------------------------------");
+		for(In_OutDto dto : list) { 
+		System.out.printf("%s\t%d\t%s\t%s\t%d\t\n", dto.getOut_date(),
+		dto.getIndexk(), dto.getBooknum(), dto.getPersonnum(), dto.getDiscount());
+		
+	}
+	private static void deleteData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void updateData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void insertData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+}

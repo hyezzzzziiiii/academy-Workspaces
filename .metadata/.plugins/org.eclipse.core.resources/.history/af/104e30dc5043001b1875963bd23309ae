@@ -1,0 +1,63 @@
+package JDBC03;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class BookDao { //해당 클래스 안에서만 사용할 것이기 때문에 priate을 이용해도됨
+	private String driver = "oracle.jdbc.OracleDriver";
+	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private Connection con = null; 
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	
+	public ArrayList<BookDto> select() {
+		ArrayList<BookDto> list = new ArrayList<BookDto>();
+		// 데이터 베이스 테이블의 조회가 여기서 이루어집니다.
+		// 결과는 list 변수에 담기고, 리턴됩니다.
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, "scott", "tiger");;
+			String sql = "select * from booklist";  //조회
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+		while(rs.next()) { 
+			 BookDto bdto = new BookDto();
+			/*
+			 * String a = rs.getString("booknum"); 
+			 * String b = rs.getString("subject"); 
+			 * int c = rs.getInt("makeyear"); 
+			 * int d = rs.getInt("inprice"); 
+			 * int e = rs.getInt("outprice"); 
+			 * String f = rs.getString("grade");
+			 */
+	
+			bdto.setBooknum(rs.getString("booknum"));
+			bdto.setSubject(rs.getString("subject"));
+			bdto.setMakeyear(rs.getInt("makeyear"));
+			bdto.setInprice( rs.getInt("inprice"));
+			bdto.setOutprice(rs.getInt("outprice"));
+			bdto.setGrade(rs.getString("grade"));
+			list.add(bdto); //반복실행문에 의해 입력한 값들을 쌓기위해 식 생성
+			
+			}
+			
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(con !=null) con.close(); 
+			if(pstmt !=null) pstmt.close(); 
+			if(rs != null) rs.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return list;  // list 지역변수임(다른 클래스의 변수명과는 관련없음)
+	}
+}

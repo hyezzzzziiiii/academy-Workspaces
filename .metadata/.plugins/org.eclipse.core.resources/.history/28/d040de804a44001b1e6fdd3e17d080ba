@@ -1,0 +1,219 @@
+package JDBC05;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
+public class PersonDao {
+
+	static String driver = "oracle.jdbc.driver.OracleDriver";
+	static String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	static Connection con = null;
+	static PreparedStatement pstmt = null;
+	static ResultSet rs = null;
+	
+	public static Connection getConnection() {
+		Connection cnn = null;
+
+		try {
+		Class.forName(driver);
+		cnn = DriverManager.getConnection(url, "scott", "tiger");
+		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (SQLException e) { e.printStackTrace();
+		} catch (Exception e) { e.printStackTrace(); }
+		return cnn;
+		}
+
+		public static void close() {
+		try { 
+		if(con != null) con.close(); 
+		if(pstmt != null) pstmt.close();
+		if(rs != null) rs.close();
+		}catch (SQLException e) { 
+		e.printStackTrace(); 
+		}
+		}
+	
+	public ArrayList<PersonDto> select() {
+		ArrayList<PersonDto> list = new ArrayList<PersonDto>();
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "select * from person order by personnum desc"; 
+		pstmt = con.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		
+		while( rs.next() ) { 
+		PersonDto pdto = new PersonDto();
+		pdto.setPersonnum(rs.getString("personnum"));
+		pdto.setPersonname(rs.getString("personname"));
+		pdto.setPhone(rs.getInt("phone"));
+		pdto.setBirth(rs.getInt("birth"));
+		pdto.setEnterdate(rs.getInt("enterdate"));
+		pdto.setBpoint(rs.getInt("bpoint"));
+		pdto.setAge(rs.getInt("age"));
+		pdto.setGender(rs.getString("gender"));
+		list.add(pdto);
+		}
+		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (SQLException e) { e.printStackTrace(); }
+
+		try { 
+			if(con != null) con.close(); 
+			if(pstmt != null) pstmt.close();
+			if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace();}
+		close(); 
+		return list;  
+	}
+	
+	public int insert(PersonDto pdto) {
+		int result = 0;
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "insert into booklist values(person_seq.nextVal,?,?,?,?,?)";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, pdto.getPersonnum());
+		pstmt.setString(2, pdto.getPersonname());
+		pstmt.setInt(3, pdto.getPhone());
+		pstmt.setInt(4, pdto.getBirth());
+		pstmt.setInt(5, pdto.getEnterdate());
+		pstmt.setInt(6, pdto.getBpoint());
+		pstmt.setInt(7, pdto.getAge());
+		pstmt.setString(8, pdto.getGender());
+		
+		//personnum/ personname/ phone/ birth/enterdate bpoint age gender
+		result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {e.printStackTrace();
+		} catch (SQLException e) {e.printStackTrace();
+		} 
+		try { 
+		if(con != null) con.close(); 
+		if(pstmt != null) pstmt.close();
+		if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace(); }
+		close(); 
+		return result;
+		}
+	
+
+	public int update(PersonDto pdto) {
+		int result = 0;
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "update person set ";
+		boolean first = true; 
+		if( !pdto.getPersonnum().equals("") ) {
+			sql = sql + " personnum=? ";
+			first=false; 
+		}
+		if( !pdto.getPersonname().equals("") ) {
+			sql = sql + " personname=? ";
+			first=false; 
+		}
+		if( pdto.getPhone() != 0 ) {
+			if(first) { sql = sql + " phone=? "; first=false; }
+			else sql = sql + ", phone=? ";
+		}
+		if( pdto.getBirth() != 0 ) {
+			if(first) { 
+			sql = sql + " birth=? "; first=false; 
+			}else sql = sql + ", birth=? ";
+		}
+		if( pdto.getEnterdate() != 0 ) {
+			if(first) { sql = sql + " enterdate=? "; first=false; }
+			else sql = sql + ", enterdate=? ";
+		}
+		if( pdto.getBpoint() != 0 ) {
+			if(first) { 
+			sql = sql + " bpoint=? "; first=false; 
+			}else sql = sql + ", bpoint=? ";
+		}
+		if( pdto.getAge() != 0 ) {
+			if(first) { 
+			sql = sql + " age=? "; first=false; 
+			}else sql = sql + ", age=? ";
+		}
+		if( !pdto.getGender().equals("") ) {
+			if(first) { sql = sql + " gender=? "; first=false;}
+			else sql = sql + ", gender=? ";
+		}
+
+		sql = sql + "where personnum = ?";
+		System.out.println(sql);
+		pstmt = con.prepareStatement(sql);
+		int cnt=1; first = true;
+		if( !pdto.getPersonname().equals("") ) {
+		pstmt.setString(1, pdto.getPersonname()); first = false;
+		}
+		if( pdto.getPhone() != 0 ) {
+		if(first) { pstmt.setInt(1, pdto.getPhone()); first=false; 
+		} else pstmt.setInt(++cnt, pdto.getPhone());
+
+		}
+		if( pdto.getBirth() != 0 ) {
+		if(first) { pstmt.setInt(1, pdto.getBirth()); first=false; 
+		} else pstmt.setInt(++cnt, pdto.getBirth());
+		}
+
+		if( pdto.getEnterdate() != 0 ) {
+		if(first) { pstmt.setInt(1, pdto.getEnterdate()); first=false; 
+		}else pstmt.setInt(++cnt, pdto.getEnterdate());
+		}
+		if( pdto.getBpoint() != 0 ) {
+			if(first) { pstmt.setInt(1, pdto.getBpoint()); first=false; 
+			}else pstmt.setInt(++cnt, pdto.getBpoint());
+		}
+		if( pdto.getAge() != 0 ) {
+			if(first) { pstmt.setInt(1, pdto.getAge()); first=false; 
+			}else pstmt.setInt(++cnt, pdto.getAge());
+		}
+		if( !pdto.getGender().equals("") ) {
+		if(first) { pstmt.setString(1, pdto.getGender()); first=false; 
+		}else pstmt.setString(++cnt, pdto.getGender());
+		}
+			pstmt.setString(++cnt, pdto.getPersonnum());
+			result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {e.printStackTrace();
+		} catch (SQLException e) {e.printStackTrace();
+		} finally {
+		try { 
+			if(con != null) con.close(); 
+			if(pstmt != null) pstmt.close();
+			if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace(); }
+		close(); 
+		}
+		return result;
+		}
+
+	public int delete(String personnum) {
+		int result = 0;
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, "scott", "tiger");
+		String sql = "delete from person where personnum=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, personnum);
+		result = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {e.printStackTrace();
+		} catch (SQLException e) {e.printStackTrace();
+		} finally { 
+
+		try { 
+		if(con != null) con.close(); 
+		if(pstmt != null) pstmt.close();
+		if(rs != null) rs.close();
+		}catch (SQLException e) { e.printStackTrace(); }
+		close(); 
+		}
+		return result;
+	}
+
+}

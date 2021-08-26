@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        body{overflow-x: hidden;} /* 스크롤바를 없애즘*/
+        
+        .box{position: relative; height: 60px; width: 400px; animation-name: moving; font-size: 150%; line-height: 60px; padding-left: 50px; animation-duration: 8s;
+        animation-iteration-count: infinite;}
+        
+        @keyframes moving{
+            from{left:105%; background: #faef7c; opacity: 0.2;}
+            to{left:-500px; background: #ff9400; opacity: 1;}
+        }
+    
+    </style>
+</head>
+<body>
+     <div class="box">
+        <h3>CSS3 Animation</h3>
+    </div>
+</body>
+</html>

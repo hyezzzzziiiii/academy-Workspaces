@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:WEB02_CSS3" serverId="Tomcat v9.0 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:WEB07_JSP_SERVLET"/>
+  <module moduleId="org.eclipse.jst.jee.server:WEB01_HTML5" serverId="J2EE Preview at localhost"/>
+</modules>

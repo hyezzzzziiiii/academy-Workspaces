@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .view{position: relative; width: 1100px;         height: 400px; margin: 0 auto; border: 1px dashed red; overflow: hidden;} /*전체크기 상자*/
+        
+        .box1{position: absolute; width: 126px;
+              height: 126px; overflow: hidden; border-radius: 100px; right: 0px;} /*버튼 이미지*/
+        
+        .box2{position:absolute; top:0px;                 left:-600px; transition:0.5s;}
+        /* 버튼이미지를 hover했을 시 들어오는 이미지/ 
+        left를 통해 사각형 밖으로 나가있음*/
+        #btn_img1{top:0px;} /*주의*/
+        #btn_img2{top:136px;}
+        #btn_img3{bottom:0px;} 
+        #btn_img1:hover+#view_img1{transform:translateX(600px);}
+        #btn_img2:hover+#view_img2{transform:translateX(600px);} /*그다음 사항까지 '+', 모든 사항 선택하고 싶으면 '~'*/
+        #btn_img3:hover+#view_img3{transform:translateX(600px);}
+        
+    </style>
+</head>
+<body>
+   <div class="view">
+       <div style="position: absolute; left: 0; right: 0px; background: silver; width: 600px; height: 400px; font-size: 130%; font-weight: bold; color: white; line-height: 400px; text-align: center; ">이미지에 마우스를 올리면 큼 이미지를 볼 수 있습니다.</div> 
+       <!--회색상자-->
+       
+       <div class="box1" id=btn_img1> 
+       <img src="images/prod1.jpg" width="128" height="128">
+       </div>
+       <div class="box2" id="view_img1">
+           <img src="images/prod1.jpg" width="600" height="400">
+       </div>
+       
+       <div class="box1" id=btn_img2>
+       <img src="images/prod2.jpg" width="128" height="128">
+       </div>
+       <div class="box2" id="view_img2">
+           <img src="images/prod2.jpg" width="600" height="400">
+       </div>
+       
+       <div class="box1" id=btn_img3>
+       <img src="images/prod3.jpg" width="128" height="128">
+       </div>
+       <div class="box2" id="view_img3">
+           <img src="images/prod3.jpg" width="600" height="400">
+       </div>
+    </div>    
+</body>
+</html>

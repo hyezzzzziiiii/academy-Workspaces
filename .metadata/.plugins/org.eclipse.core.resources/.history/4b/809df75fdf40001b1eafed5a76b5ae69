@@ -1,0 +1,70 @@
+select * from emp;
+select * from dept;
+
+--[1] 이름 scott이 근무하는 부서명, 부서의 지역명 출력(서브 쿼리 사용)
+-- select 두번 사용
+select deptno from emp where ename = 'SCOTT'; --20
+select dname, loc from dept where deptno = 20;  
+
+-- select dname, loc from dept where deptno = (  ); 
+-- 괄호안에 select deptno from emp where ename = 'SCOTT'; 명령을 삽입
+select dname, loc from dept 
+where deptno = (select deptno from emp where ename = 'SCOTT');
+
+-- 위 둘의 공통 단점 : 결과의 SCOTT 이라는 이름이 나오지 않습니다.
+-- 서브쿼리의 단점 : 서브쿼리의 결과가 2건이상이면 뜻하지 않는 오류를 초래합니다.
+-- 서브쿼리의 단점을 해결을 위해  = 대신 in을 씁니다.
+select dname, loc from dept 
+where deptno in(select deptno from emp where ename = 'SCOTT');
+-- where deptno in(10,20 ..)와 같은 형식이므로 in 안에 데이터만큼 결과가 출력됩니다.
+
+
+-- [2] join : 두개 이상의 테이블에 나뉘어져 있는 데이터를 한번에 sql문으로 원하는 겨로가를 얻음
+-- 위에서 언급한 단점들이 한번에 해결되는 방법
+
+
+-- cross join : 두개 이상의 테이블이 조인될때 where절에 의해 공통되는 칼럼에 의한 결합이 발생하지 
+-- 않는 경우이며, 가장 최악의 결과를 얻는 조인방식 
+-- A테이블의 1레코드와 B테이블의 모든 레코드 조합
+-- A테이블의 2레코드와 B테이블의 모든 레코드 조합
+-- A테이블의 3레코드와 B테이블의 모든 레코드 조합
+-- ...
+-- A테이블의 레코드가 8개, B테이블의 레코드가 7개라면 총 크로스조인의 결과 레코드 수는 8X7 = 56
+-- A테이블의 레코드가 8개, B테이블의 레코드가 3개라면 총 크로스조인의 결과 필드 수는 8+3 = 11
+select * from emp, dept;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+package com.ezen.controller.action;
+
+public class Login_Form_Action {
+
+}

@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!-- JSP : Java Sever Page
+     서버 내에서 페이지 표시에 필요한 연산을 마친 후 결과만 클라이언트로 보내주는 웹프로그래밍 언어
+     JSP이외의 웹프로그래밍 언어로는 ASP, PHP 가 있으며, 서버 및 환경에 따라 프로그래밍 언어 종류를
+     선택적으로 사용하게 됩니다.-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+JAVA SERVER PAGE <br/>
+현재시간 : <%=  new java.util.Date() %>
+<!-- HTML 주석  -->
+<!--  java.util.Date d = new java.util.Date();  d를 body의 해당위치에 표시-->
+
+<%-- JSP 주석 --%>
+<%-- html 파일안에 jsp문법이 껴들어 코딩할 때는 <% %>를 사용합니다. --%>
+<%-- 다만 페이지에 출력될 내용을 기술한다면 <% = %> 를 쓰고 변수명이나 출력할 내용을 씁니다--%>
+<%-- HTML5 와 JSP가 동사애 사용되기 때문에 주석의 양식은 위의 두가지  --%>
+
+</body>
+</html>
